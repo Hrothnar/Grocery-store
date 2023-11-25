@@ -1,18 +1,21 @@
 const { DataTypes } = require('sequelize');
-const uppercaseFirst = str => `${str[0].toUpperCase()}${str.substr(1)}`;
 
 class Tag {
-    getTaggable() {
-
-    }
+  async getTaggables(options) {
+    const toyCar = await this.getToyCars(options);
+    const lamp = await this.getLamps(options);
+    const chocolateBar = await this.getChocolateBars(options);
+    toyCar.concat(lamp);
+    toyCar.concat(chocolateBar);
+    return toyCar;
+  }
 }
 
 module.exports = (sequelize) => {
   const Tag = sequelize.define('tag', {
-    id: { type: DataTypes.BIGINT, allowNull: false, unique: true, autoIncrement: true, field: 'id', primaryKey: true },
     name: { type: DataTypes.STRING, allowNull: false, unique: true, field: 'name' },
-    taggableType: { type: DataTypes.STRING, allowNull: false, unique: false, field: 'taggable_type' },
-    taggableTypeId: { type: DataTypes.BIGINT, allowNull: false, unique: false, field: 'taggable_type_id' },
+  }, {
+    timestamps: false
   });
   return Tag;
 };
