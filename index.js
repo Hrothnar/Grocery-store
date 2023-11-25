@@ -3,6 +3,12 @@ const cors = require("cors");       // import cors module
 
 const app = express();
 
+const db = require("./app/model/init.js");
+
+db.sequelize.sync({ force: true })
+  .then(() => { console.log("Synced db."); })
+  .catch((err) => { console.log("Failed to sync db: " + err.message); });
+
 const corsOptions = {origin: "http://localhost:8090"}; // set origin 
 
 app.use(cors(corsOptions));
@@ -19,5 +25,6 @@ const PORT = process.env.PORT || "8080"; // set port, listen for requests
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
+
 
 
