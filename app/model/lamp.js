@@ -9,7 +9,8 @@ module.exports = (sequelize) => {
     amount: { type: DataTypes.INTEGER, allowNull: false, unique: false, field: 'amount' },
     isAvailable: { type: DataTypes.BOOLEAN, allowNull: false, unique: false, field: 'is_available' },
   }, {
-    timestamps: false
+    timestamps: false,
+    tableName: "lamps"
   });
   return Lamp;
 };

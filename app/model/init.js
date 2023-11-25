@@ -23,34 +23,70 @@ db.tags = require("./tag.js")(sequelize, Sequelize);
 db.toyCars = require("./toy_car.js")(sequelize, Sequelize);
 db.lamps = require("./lamp.js")(sequelize, Sequelize);
 db.chocolateBars = require("./chocolate_bar.js")(sequelize, Sequelize);
+db.taggables = require("./taggable.js")(sequelize, Sequelize);
 
-db.toyCars.hasMany(db.tags, {
+db.toyCars.belongsToMany(db.tags, {
+  through: {
+    model: db.taggables,
+    unique: false,
+    scope: {
+      taggableType: "toy_cars"
+    }
+  },
   foreignKey: "taggable_id",
-  constraints: false,
-  scope: {
-    taggableType: "toyCar"
-  }
+  constraints: false
 });
 
-db.lamps.hasMany(db.tags, {
+db.lamps.belongsToMany(db.tags, {
+  through: {
+    model: db.taggables,
+    unique: false,
+    scope: {
+      taggableType: "lamps"
+    }
+  },
   foreignKey: "taggable_id",
-  constraints: false,
-  scope: {
-    taggableType: "lamp"
-  }
+  constraints: false
 });
 
-db.chocolateBars.hasMany(db.tags, {
+db.chocolateBars.belongsToMany(db.tags, {
+  through: {
+    model: db.taggables,
+    unique: false,
+    scope: {
+      taggableType: "chocolate_bars"
+    }
+  },
   foreignKey: "taggable_id",
-  constraints: false,
-  scope: {
-    taggableType: "chocolateBar"
-  }
+  constraints: false
 });
 
-db.tags.belongsTo(db.toyCars, { foreignKey: "taggable_id", constraints: false });
-db.tags.belongsTo(db.lamps, { foreignKey: "taggable_id", constraints: false });
-db.tags.belongsTo(db.chocolateBars, { foreignKey: "taggable_id", constraints: false });
+db.tags.belongsToMany(db.toyCars, {
+  through: {
+    model: db.taggables,
+    unique: false,
+  },
+  foreignKey: "tag_id",
+  constraints: false
+});
+
+db.tags.belongsToMany(db.lamps, {
+  through: {
+    model: db.taggables,
+    unique: false,
+  },
+  foreignKey: "tag_id",
+  constraints: false
+});
+
+db.tags.belongsToMany(db.chocolateBars, {
+  through: {
+    model: db.taggables,
+    unique: false,
+  },
+  foreignKey: "tag_id",
+  constraints: false
+});
 
 db.tags.addHook("afterFind", findResult => {
   if (!Array.isArray(findResult)) findResult = [findResult];
