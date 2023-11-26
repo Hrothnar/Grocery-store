@@ -20,10 +20,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize; 
 
 db.tags = require("./tag.js")(sequelize, Sequelize);
+db.taggables = require("./taggable.js")(sequelize, Sequelize);
 db.toyCars = require("./toy_car.js")(sequelize, Sequelize);
 db.lamps = require("./lamp.js")(sequelize, Sequelize);
 db.chocolateBars = require("./chocolate_bar.js")(sequelize, Sequelize);
-db.taggables = require("./taggable.js")(sequelize, Sequelize);
 
 db.toyCars.belongsToMany(db.tags, {
   through: {
