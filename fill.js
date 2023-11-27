@@ -7,7 +7,7 @@ exports.run = async () => {
     const tag1 = await TagController.create({
       name: "Tag One"
     });
-  
+    
     const tag2 = await TagController.create({
       name: "Tag Two"
     });

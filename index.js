@@ -22,9 +22,11 @@ app.use(express.json()); // parse requests of content-type - application/json
 
 app.use(express.urlencoded({ extended: true })); // parse requests of content-type - application/x-www-form-urlencoded
 
-app.get("/", (req, res) => { // simple route
-    res.json({ message: "Welcome to REST API application." });
-});
+require("./app/route/tag_route.js")(app);
+require("./app/route/toy_car_route.js")(app);
+require("./app/route/lamp_route.js")(app);
+require("./app/route/chocolate_bar_route.js")(app);
+require("./app/route/main_route.js")(app);
 
 const PORT = process.env.PORT || "8080"; // set port, listen for requests
 app.listen(PORT, () => {

@@ -9,5 +9,5 @@ module.exports = app => {
     // router.delete("/:id", tag.delete);
     // router.delete("/", tag.deleteAll);
     
-    app.use("/toy_cars", router);
+    app.use("/tag", router);
 }
