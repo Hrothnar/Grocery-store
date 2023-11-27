@@ -32,7 +32,6 @@ exports.addTag = (toyCarId, tagId) => {
                 console.log("ToyCar not found!");
                 return null;
             }
-
               toyCar.addTag(tag);
               console.log(`>> added Tag id=${tag.id} to ToyCar id=${toyCar.id}`);
               return toyCar;
@@ -42,3 +41,28 @@ exports.addTag = (toyCarId, tagId) => {
             console.log(">> Error while adding Tag to ToyCar: ", err);
         });
   };
+
+  exports.findAll = (req, res) => {
+    return ToyCar.findAll()
+      .then((toyCar) => {
+        res.send(toyCar);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving data"
+        });
+      });
+  };
+
+  exports.findByPk = (req, res) => {
+    const id = req.params.id;
+    return ToyCar.findByPk(id)
+    .then((toyCar) => {
+      res.send(toyCar);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving data"
+      });
+    });
+  }

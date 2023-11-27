@@ -28,10 +28,8 @@ exports.create = (tag) => {
 
   exports.findByPk = (req, res) => {
     const id = req.params.id;
-    console.log(id);
     return Tag.findByPk(id)
     .then((tag) => {
-      console.log(tag);
       res.send(tag);
     })
     .catch((err) => {
