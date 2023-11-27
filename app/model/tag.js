@@ -13,9 +13,11 @@ class Tag {
 
 module.exports = (sequelize) => {
   const Tag = sequelize.define('tag', {
-    name: { type: DataTypes.STRING, allowNull: false, unique: true, field: 'name' },
+    name: {
+      type: DataTypes.STRING, allowNull: false, unique: true, field: 'name',
+    },
   }, {
-    timestamps: false
+    timestamps: false,
   });
   return Tag;
 };
