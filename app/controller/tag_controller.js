@@ -14,26 +14,29 @@ exports.create = (tag) => {
       });
   };
 
-  exports.findAll = () => {
-    return Tag.findAll({   
-    })
+  exports.findAll = (req, res) => {
+    return Tag.findAll()
       .then((tags) => {
-        return tags;
+        res.send(tags);
       })
       .catch((err) => {
-        console.log(">> Error while retrieving Tags: ", err);
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving data"
+        });
       });
   };
 
-  exports.findByPk = (tagId) => {
-    return Tag.findByPk({
-      tagId: tagId
-    })
+  exports.findByPk = (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    return Tag.findByPk(id)
     .then((tag) => {
       console.log(tag);
-        return tag;
+      res.send(tag);
     })
     .catch((err) => {
-        console.log(">> Error while retrieving Tag: ", err);
-    })
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving data"
+      });
+    });
   }
