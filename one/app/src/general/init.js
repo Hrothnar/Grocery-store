@@ -19,11 +19,11 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tags = require('./tag.js')(sequelize, Sequelize);
+db.tags = require('../component/tag/tag.js')(sequelize, Sequelize);
 db.taggables = require('./taggable.js')(sequelize, Sequelize);
-db.toyCars = require('./toy_car.js')(sequelize, Sequelize);
-db.lamps = require('./lamp.js')(sequelize, Sequelize);
-db.chocolateBars = require('./chocolate_bar.js')(sequelize, Sequelize);
+db.toyCars = require('../component/toy_car/toy_car.js')(sequelize, Sequelize);
+db.lamps = require('../component/lamp/lamp.js')(sequelize, Sequelize);
+db.chocolateBars = require('../component/chocolate_bar/chocolate_bar.js')(sequelize, Sequelize);
 
 db.toyCars.belongsToMany(db.tags, {
   through: {
