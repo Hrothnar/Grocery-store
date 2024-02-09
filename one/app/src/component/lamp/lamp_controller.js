@@ -1,4 +1,4 @@
-const db = require('../model/init.js');
+const db = require('../../general/init.js');
 const Lamp = db.lamps;
 const Tag = db.tags;
 
