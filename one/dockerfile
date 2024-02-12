@@ -1,0 +1,12 @@
+FROM node:21-bookworm
+LABEL maintainer="kirill@caiman.am"
+ENV POSTGRES_DB_ONE=$POSTGRES_DB_ONE \
+    POSTGRES_USER_ONE=$POSTGRES_USER_ONE \
+    POSTGRES_PASSWORD_ONE=$POSTGRES_PASSWORD_ONE \
+    PORT=$APP_PORT_ONE
+WORKDIR /server
+COPY ./ ./
+EXPOSE $PORT
+# RUN apt update && apk upgrade
+RUN npm install
+CMD ["node", "index.js"]

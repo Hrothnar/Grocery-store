@@ -1,32 +1,23 @@
-version: "2.24"
+version: "3.8"
 services:
-  backend_one:
-    image: node:21-bookworm
-    # build: ./one
-    volumes: 
-    - ./one  
-    ports:
-    - 1111:1111
-    - 2222:2222
-    command: node ./index.js
-    env_file:
-    - .env
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB_ONE}
-      POSTGRES_USER: ${POSTGRES_USER_ONE}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_ONE}
-    depends_on:
-    - database_one
+  # backend_one:
+  #   build: ./one
+  #   ports:
+  #   - 127.0.0.1:1111:1111
+  #   container_name: backend_one
+  #   depends_on:
+  #   - database_one
   database_one:
     image: postgres:16.1-bookworm
+    container_name: database_one
     restart: always
-    env_file:
-    - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB_ONE}
       POSTGRES_USER: ${POSTGRES_USER_ONE}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_ONE}
-    volumes: 
+    ports:  
+    - 2222:2222
+    volumes:
     - db:/var/lib/postgresql/data
 volumes:
   db:
