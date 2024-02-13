@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../../general/db_connection.js";
+import { sequelize } from "../../general/db_connection.js";
 
 class Tag extends Model {
 
@@ -18,7 +18,7 @@ Tag.init({
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
-    field: 'name',
+    field: "name",
   },
 }, {
   sequelize: sequelize,

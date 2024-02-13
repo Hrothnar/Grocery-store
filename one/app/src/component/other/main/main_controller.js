@@ -1,9 +1,11 @@
 export function hello(request, response) {
-  res.json({ message: 'Welcome to REST API application.' })
-    .then((tag) => {
-      console.log(`Created Tag: ${JSON.stringify(tag, null, 2)}`);
-    })
-    .catch((err) => {
-      console.log('>> Error while creating Tag: ', err);
-    });
+  response.status(418);
+  response.send("Welcome to REST API application!");
+  // response.json({ message: "Welcome to REST API application." })
+  //   .then(() => {
+
+  //   })
+  //   .catch((error) => {
+  //     throw error;
+  //   });
 }; 

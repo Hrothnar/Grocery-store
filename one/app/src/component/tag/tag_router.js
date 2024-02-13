@@ -1,5 +1,5 @@
+import express from "express";
 import * as tagController from "./tag_controller.js";
-import { express } from "../../general/db_connection.js";
 
 export function tagRouter(app) {
   const router = express.Router();

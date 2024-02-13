@@ -1,5 +1,5 @@
+import express from "express";
 import * as toyCarController from "./toy_car_controller.js";
-import { express } from "../../general/db_connection.js";
 
 export function toyCarRouter(app) {
   const router = express.Router();

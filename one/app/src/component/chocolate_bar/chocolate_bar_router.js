@@ -1,5 +1,5 @@
+import express from "express";
 import * as chocolateBarController from "./chocolate_bar_controller.js";
-import { express } from "../../general/db_connection.js";
 
 export function chocolateBarRouter(app) {
   const router = express.Router();

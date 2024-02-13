@@ -1,5 +1,5 @@
+import express from "express";
 import * as lampController from "./lamp_controller.js";
-import { express } from "../../general/db_connection.js";
 
 export function lampRouter(app) {
   const router = express.Router();

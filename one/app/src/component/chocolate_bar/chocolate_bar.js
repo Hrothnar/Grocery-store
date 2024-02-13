@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../../general/db_connection.js";
+import { sequelize } from "../../general/db_connection.js";
 
 class ChocolateBar extends Model {
 
