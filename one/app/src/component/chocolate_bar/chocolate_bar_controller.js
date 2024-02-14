@@ -2,95 +2,84 @@ import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
 
 export function getChocolateBarCreateForm(request, response) {
-
-};
+    response.send("This URL is under construction");
+}
 
 export function createChocolateBar(request, response) {
+    ChocolateBar.create({
+        name: request.body.name,
+        type: request.body.type,
+        price: request.body.price,
+        amount: request.body.amount,
+        isAvailable: request.body.isAvailable
+    })
+        .then((chocolateBar) => {
+            console.log(`Created ChocolateBar: ${JSON.stringify(chocolateBar, null, 2)}`);
+            response.send(`Created ChocolateBar: ${JSON.stringify(chocolateBar, null, 2)}`)
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
 
-};
+export function getChocolateBarEditFormById(request, response) {
+    response.send("This URL is under construction");
+}
 
-export function getChocolateBarEditForm(request, response) {
+export function updateChocolateBarById(request, response) {
+    const update = {
+        name: request.body.name,
+        type: request.body.type,
+        price: request.body.price,
+        amount: request.body.amount,
+        isAvailable: request.body.isAvailable
+    };
 
-};
+    ChocolateBar.update(update, { where: { id: request.parameters.id } })
+        .then(() => {
+            response.send("This entity was updated");
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
 
-export function updateChocolateBar(request, response) {
-
-};
-
-export function removeAllChocolateBar(request, response) {
-
-};
+export function removeAllChocolateBars(request, response) {
+    ChocolateBar.destroy({ where: {} })
+        .then(() => {
+            response.send("All entities were deleted");
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
 
 export function removeChocolateBarById(request, response) {
-
-};
+    ChocolateBar.destroy({ where: { id: request.parameters.id } })
+        .then(() => {
+            response.send("This entity was deleted");
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
 
 export function getAllChocolateBars(request, response) {
-
-};
+    ChocolateBar.findAll({})
+        .then((chocolateBars) => {
+            response.send(chocolateBars);
+        })
+        .catch((error) => {
+            throw error;
+        });
+}
 
 export function getChocolateBarById(request, response) {
-
-};
-
-
-
-
-// exports.create = (chocolateBar) => ChocolateBar.create({
-//   name: chocolateBar.name,
-//   type: chocolateBar.type,
-//   price: chocolateBar.price,
-//   amount: chocolateBar.amount,
-//   isAvailable: chocolateBar.isAvailable,
-// })
-//   .then((chocolateBar) => {
-//     console.log(`Created ChocolateBar: ${JSON.stringify(chocolateBar, null, 2)}`);
-//     return chocolateBar;
-//   })
-//   .catch((err) => {
-//     console.log('Error while creating ChocolateBar: ', err);
-//   });
-
-// exports.addTag = (chocolateBarId, tagId) => Tag.findByPk(tagId)
-//   .then((tag) => {
-//     if (!tag) {
-//       console.log('Tag not found');
-//       return null;
-//     }
-//     return ChocolateBar.findByPk(chocolateBarId)
-//       .then((chocolateBar) => {
-//         if (!chocolateBar) {
-//           console.log('ChocolateBar not found!');
-//           return null;
-//         }
-//         chocolateBar.addTag(tag);
-//         console.log(`Added Tag id=${tag.id} to ChocolateBar id=${chocolateBar.id}`);
-//         return chocolateBar;
-//       });
-//   })
-//   .catch((err) => {
-//     console.log('Error while adding Tag to ChocolateBar: ', err);
-//   });
-
-// exports.findAll = (req, res) => ChocolateBar.findAll()
-//   .then((chocolateBar) => {
-//     res.send(chocolateBar);
-//   })
-//   .catch((err) => {
-//     res.status(500).send({
-//       message: err.message || 'Some error occurred while retrieving data',
-//     });
-//   });
-
-// exports.findByPk = (req, res) => {
-//   const { id } = req.params;
-//   return ChocolateBar.findByPk(id)
-//     .then((chocolateBar) => {
-//       res.send(chocolateBar);
-//     })
-//     .catch((err) => {
-//       res.status(500).send({
-//         message: err.message || 'Some error occurred while retrieving data',
-//       });
-//     });
-// };
+    ChocolateBar.findOne({ id: request.parameters.id })
+        .then((chocolateBar) => {
+            response.send(chocolateBar);
+        })
+        .catch((error) => {
+            throw error;
+        });
+}

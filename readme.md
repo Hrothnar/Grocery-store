@@ -1,1 +1,1 @@
-Don't touch anything!
+In order to start the project, you need to jump into the nearest window. Trust me.

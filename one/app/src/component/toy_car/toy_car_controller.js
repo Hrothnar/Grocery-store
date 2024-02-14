@@ -3,35 +3,35 @@ import { Tag } from "../tag/tag.js";
 
 export function getToyCarCreateForm(request, response) {
 
-};
+}
 
 export function createToyCar(request, response) {
 
-};
+}
 
 export function getToyCarEditForm(request, response) {
 
-};
+}
 
 export function updateToyCar(request, response) {
 
-};
+}
 
-export function removeAllToyCar(request, response) {
+export function removeAllToyCars(request, response) {
 
-};
+}
 
 export function removeToyCarById(request, response) {
 
-};
+}
 
 export function getAllToyCars(request, response) {
 
-};
+}
 
 export function getToyCarById(request, response) {
 
-};
+}
 
 // exports.create = (toyCar) => ToyCar.create({
 //   name: toyCar.name,

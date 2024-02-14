@@ -10,8 +10,8 @@ class Tag extends Model {
     toyCar.concat(lamp);
     toyCar.concat(chocolateBar);
     return toyCar;
-  };
-};
+  }
+}
 
 Tag.init({
   name: {
@@ -25,7 +25,7 @@ Tag.init({
   timestamps: false,
   modelName: "Tag",
   tableName: "tags",
-});
+})
 
 /**
  * A Sequelize hook which intercepts responses after finding Tag
@@ -49,6 +49,6 @@ Tag.addHook("afterFind", (result) => {
     delete one.chocolateBar;
     delete one.dataValues.chocolateBar;
   }
-});
+})
 
 export { Tag };

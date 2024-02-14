@@ -3,7 +3,7 @@ import { sequelize } from "../../general/db_connection.js";
 
 class ChocolateBar extends Model {
 
-};
+}
 
 ChocolateBar.init({
   id: {
@@ -49,6 +49,6 @@ ChocolateBar.init({
   timestamps: false,
   modelName: "ChocolateBar",
   tableName: "chocolate_bars",
-});
+})
 
 export { ChocolateBar };

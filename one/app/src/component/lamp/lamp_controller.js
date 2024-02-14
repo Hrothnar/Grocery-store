@@ -3,35 +3,35 @@ import { Tag } from "../tag/tag.js";
 
 export function getLampCreateForm(request, response) {
 
-};
+}
 
 export function createLamp(request, response) {
 
-};
+}
 
 export function getLampEditForm(request, response) {
 
-};
+}
 
 export function updateLamp(request, response) {
 
-};
+}
 
-export function removeAllLamp(request, response) {
+export function removeAllLamps(request, response) {
 
-};
+}
 
 export function removeLampById(request, response) {
 
-};
+}
 
 export function getAllLamps(request, response) {
 
-};
+}
 
 export function getLampById(request, response) {
 
-};
+}
 
 // exports.create = (lamp) => Lamp.create({
 //   name: lamp.name,

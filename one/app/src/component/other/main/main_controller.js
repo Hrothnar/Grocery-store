@@ -1,6 +1,6 @@
 export function hello(request, response) {
   response.status(418);
-  response.send("Welcome to REST API application!");
+  response.send("Welcome to the REST API application!");
   // response.json({ message: "Welcome to REST API application." })
   //   .then(() => {
 
@@ -8,4 +8,4 @@ export function hello(request, response) {
   //   .catch((error) => {
   //     throw error;
   //   });
-}; 
+}
