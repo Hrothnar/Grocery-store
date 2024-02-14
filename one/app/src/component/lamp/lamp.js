@@ -3,7 +3,7 @@ import { sequelize } from "../../general/db_connection.js";
 
 class Lamp extends Model {
 
-};
+}
 
 Lamp.init({
   id: {
@@ -49,6 +49,6 @@ Lamp.init({
   timestamps: false,
   modelName: "Lamp",
   tableName: "lamps",
-});
+})
 
 export { Lamp };

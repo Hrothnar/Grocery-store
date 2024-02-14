@@ -16,7 +16,7 @@ export function setupModelRelations() {
     },
     foreignKey: "taggable_id",
     constraints: false,
-  });
+  })
 
   Lamp.belongsToMany(Tag, {
     through: {
@@ -28,7 +28,7 @@ export function setupModelRelations() {
     },
     foreignKey: "taggable_id",
     constraints: false,
-  });
+  })
 
   ChocolateBar.belongsToMany(Tag, {
     through: {
@@ -40,7 +40,7 @@ export function setupModelRelations() {
     },
     foreignKey: "taggable_id",
     constraints: false,
-  });
+  })
 
   Tag.belongsToMany(ToyCar, {
     through: {
@@ -49,7 +49,7 @@ export function setupModelRelations() {
     },
     foreignKey: "tag_id",
     constraints: false,
-  });
+  })
 
   Tag.belongsToMany(Lamp, {
     through: {
@@ -58,7 +58,7 @@ export function setupModelRelations() {
     },
     foreignKey: "tag_id",
     constraints: false,
-  });
+  })
 
   Tag.belongsToMany(ChocolateBar, {
     through: {
@@ -67,5 +67,5 @@ export function setupModelRelations() {
     },
     foreignKey: "tag_id",
     constraints: false,
-  });
-};
+  })
+}
