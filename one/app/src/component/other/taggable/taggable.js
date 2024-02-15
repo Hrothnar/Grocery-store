@@ -3,7 +3,7 @@ import { sequelize } from "../../../general/db_connection.js";
 
 class Taggable extends Model {
 
-}
+};
 
 Taggable.init({
   tagId: {
@@ -34,4 +34,4 @@ Taggable.init({
   tableName: "taggables",
 });
 
-export { Taggable }
+export { Taggable };

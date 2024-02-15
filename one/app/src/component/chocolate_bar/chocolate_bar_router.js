@@ -13,5 +13,7 @@ export function registerChocolateBarRouters(app) {
   router.get("/", chocolateBarController.getAllChocolateBars);
   router.get("/:id", chocolateBarController.getChocolateBarById);
 
+  router.get("/:chocolateBarId/:tagId", chocolateBarController.attachTagToChocolateBarById);
+
   app.use("/chocolate_bar", router);
 }
