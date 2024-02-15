@@ -83,3 +83,28 @@ export function getChocolateBarById(request, response) {
             throw error;
         });
 }
+
+export function attachTagToChocolateBarById() {
+
+}
+
+// exports.addTag = (toyCarId, tagId) => Tag.findByPk(tagId)
+//     .then((tag) => {
+//         if (!tag) {
+//             console.log('Tag not found!');
+//             return null;
+//         }
+//         return ToyCar.findByPk(toyCarId)
+//             .then((toyCar) => {
+//                 if (!toyCar) {
+//                     console.log('ToyCar not found!');
+//                     return null;
+//                 }
+//                 toyCar.addTag(tag);
+//                 console.log(`>> added Tag id=${tag.id} to ToyCar id=${toyCar.id}`);
+//                 return toyCar;
+//             });
+//     })
+//     .catch((err) => {
+//         console.log('>> Error while adding Tag to ToyCar: ', err);
+//     });

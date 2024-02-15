@@ -28,7 +28,8 @@ Tag.init({
 })
 
 /**
- * A Sequelize hook which intercepts responses after finding Tag
+ * A Sequelize hook which intercepts responses after finding Tag. 
+ * This hook created for eager model loading, it automatically populates the taggable field in every instance.
  */
 Tag.addHook("afterFind", (result) => {
   if (!Array.isArray(result)) {
