@@ -979,6 +979,7 @@ Video.init({
 }, { sequelize, modelName: 'video' });
 
 class Comment extends Model {
+
     getCommentable(options) {
         if (!this.commentableType) {  // check if the comment (this) has commentableType field
             return Promise.resolve(null);
@@ -1060,3 +1061,266 @@ INSERT INTO "comments"(
 UPDATE "comments"
 SET "commentableId" = 1, "commentableType" = 'image', "updatedAt" = '2018-04-17 05:38:43.948 +00:00'
 WHERE "id" IN(1)
+
+/**
+Polymorphic lazy loading
+
+The getCommentable instance method on Comment provides an abstraction for lazy loading the associated commentable - working whether the comment belongs to 
+an Image or a Video.
+
+It works by simply converting the commentableType string into a call to the correct mixin (either getImage or getVideo).
+
+Note that the getCommentable implementation above:
+    Returns null when no association is present (which is good);
+    Allows you to pass an options object to getCommentable(options), just like any other standard Sequelize method. This is useful to specify 
+    where-conditions or includes, for example.
+
+
+Polymorphic eager loading
+
+Now, we want to perform a polymorphic eager loading of the associated commentables for one (or more) comments. 
+We want to achieve something similar to the following idea:
+ */
+const comment = await Comment.findOne({
+    include: [ /* What to put here? */]
+});
+console.log(comment.commentable); // This is our goal
+
+/**
+The solution is to tell Sequelize to include both Images and Videos, so that our afterFind hook defined above will do the work, 
+automatically adding the commentable field to the instance object, providing the abstraction we want.
+
+For example:
+ */
+const comments = await Comment.findAll({
+    include: [Image, Video]
+});
+for (const comment of comments) {
+    const message = `Found comment #${comment.id} with ${comment.commentableType} commentable:`;
+    console.log(message, comment.commentable.toJSON());
+}
+
+// Out example 
+// Found comment #1 with image commentable: { id: 1,
+//     title: 'Meow',
+//     url: 'https://placekitten.com/408/287',
+//     createdAt: 2019-12-26T15:04:53.047Z,
+//     updatedAt: 2019-12-26T15:04:53.047Z }
+
+/**
+Caution - possibly invalid eager/lazy loading!
+
+Consider a comment Foo whose commentableId is 2 and commentableType is image. Consider also that Image A and Video X both happen to have an id equal to 2. 
+Conceptually, it is clear that Video X is not associated to Foo, because even though its id is 2, the commentableType of Foo is image, not video. However, 
+this distinction is made by Sequelize only at the level of the abstractions performed by getCommentable and the hook we created above.
+
+This means that if you call Comment.findAll({ include: Video }) in the situation above, Video X will be eager loaded into Foo. Thankfully, 
+our afterFind hook will delete it automatically, to help prevent bugs, but regardless it is important that you understand what is going on.
+
+The best way to prevent this kind of mistake is to avoid using the concrete accessors and mixins directly at all costs 
+(such as .image, .getVideo(), .setImage(), etc), always preferring the abstractions we created, such as .getCommentable() and .commentable. 
+If you really need to access eager-loaded .image and .video for some reason, make sure you wrap that in a type check such as comment.commentableType === 'image'.
+ */
+
+
+
+/**
+Configuring a Many-to-Many polymorphic association
+
+In the above example, we had the models Image and Video being abstractly called commentables, with one commentable having many comments. 
+However, one given comment would belong to a single commentable - this is why the whole situation is a One-to-Many polymorphic association.
+
+Now, to consider a Many-to-Many polymorphic association, instead of considering comments, we will consider tags. For convenience, 
+instead of calling Image and Video as commentables, we will now call them taggables. One taggable may have several tags, 
+and at the same time one tag can be placed in several taggables.
+
+The setup for this goes as follows:
+
+    Define the junction model explicitly, specifying the two foreign keys as tagId and taggableId (this way it is a junction model for 
+    a Many-to-Many relationship between Tag and the abstract concept of taggable);
+    Define a string field called taggableType in the junction model;
+    Define the belongsToMany associations between the two models and Tag:
+        Disabling constraints (i.e. using { constraints: false }), since the same foreign key is referencing multiple tables;
+        Specifying the appropriate association scopes;
+    Define a new instance method on the Tag model called getTaggables which calls, under the hood, the correct mixin to fetch the appropriate taggables.
+
+Implementation:
+ */
+class Tag extends Model {
+
+    async getTaggables(options) {
+        const images = await this.getImages(options);
+        const videos = await this.getVideos(options);
+        // Concat images and videos in a single array of taggables
+        return images.concat(videos);
+    }
+}
+
+Tag.init({
+    name: DataTypes.STRING
+}, { sequelize, modelName: 'tag' });
+
+// Here we define the junction model explicitly
+class Tag_Taggable extends Model { }
+
+Tag_Taggable.init({
+    tagId: {
+        type: DataTypes.INTEGER,
+        unique: 'tt_unique_constraint'
+    },
+    taggableId: {
+        type: DataTypes.INTEGER,
+        unique: 'tt_unique_constraint',
+        references: null
+    },
+    taggableType: {
+        type: DataTypes.STRING,
+        unique: 'tt_unique_constraint'
+    }
+}, { sequelize, modelName: 'tag_taggable' });
+
+Image.belongsToMany(Tag, {
+    through: {
+        model: Tag_Taggable,
+        unique: false,
+        scope: {
+            taggableType: 'image'
+        }
+    },
+    foreignKey: 'taggableId',
+    constraints: false
+});
+
+Tag.belongsToMany(Image, {
+    through: {
+        model: Tag_Taggable,
+        unique: false
+    },
+    foreignKey: 'tagId',
+    constraints: false
+});
+
+Video.belongsToMany(Tag, {
+    through: {
+        model: Tag_Taggable,
+        unique: false,
+        scope: {
+            taggableType: 'video'
+        }
+    },
+    foreignKey: 'taggableId',
+    constraints: false
+});
+
+Tag.belongsToMany(Video, {
+    through: {
+        model: Tag_Taggable,
+        unique: false
+    },
+    foreignKey: 'tagId',
+    constraints: false
+});
+
+/**
+The constraints: false option disables references constraints, as the taggableId column references several tables, we cannot add a REFERENCES constraint to it.
+
+Note that:
+
+    The Image -> Tag association defined an association scope: { taggableType: 'image' }
+    The Video -> Tag association defined an association scope: { taggableType: 'video' }
+
+These scopes are automatically applied when using the association functions. Some examples are below, with their generated SQL statements:
+*/
+
+// image.getTags():
+SELECT
+    `tag`.`id`,
+    `tag`.`name`,
+    `tag`.`createdAt`,
+    `tag`.`updatedAt`,
+    `tag_taggable`.`tagId` AS`tag_taggable.tagId`,
+        `tag_taggable`.`taggableId` AS`tag_taggable.taggableId`,
+            `tag_taggable`.`taggableType` AS`tag_taggable.taggableType`,
+                `tag_taggable`.`createdAt` AS`tag_taggable.createdAt`,
+                    `tag_taggable`.`updatedAt` AS`tag_taggable.updatedAt`
+FROM `tags` AS`tag`
+INNER JOIN `tag_taggables` AS `tag_taggable` ON
+    `tag`.`id` = `tag_taggable`.`tagId` AND
+        `tag_taggable`.`taggableId` = 1 AND
+            `tag_taggable`.`taggableType` = 'image';
+
+/**
+Here we can see that `tag_taggable`.`taggableType` = 'image' was automatically added to the WHERE clause of the generated SQL. 
+This is exactly the behavior we want.
+*/
+// tag.getTaggables():
+SELECT
+    `image`.`id`,
+    `image`.`url`,
+    `image`.`createdAt`,
+    `image`.`updatedAt`,
+    `tag_taggable`.`tagId` AS`tag_taggable.tagId`,
+        `tag_taggable`.`taggableId` AS`tag_taggable.taggableId`,
+            `tag_taggable`.`taggableType` AS`tag_taggable.taggableType`,
+                `tag_taggable`.`createdAt` AS`tag_taggable.createdAt`,
+                    `tag_taggable`.`updatedAt` AS`tag_taggable.updatedAt`
+FROM `images` AS`image`
+INNER JOIN `tag_taggables` AS `tag_taggable` ON
+    `image`.`id` = `tag_taggable`.`taggableId` AND
+        `tag_taggable`.`tagId` = 1;
+
+/**
+Note that the above implementation of getTaggables() allows you to pass an options object to getCommentable(options), just like any other standard Sequelize method. This is useful to specify where-conditions or includes, for example.
+Applying scopes on the target model
+
+In the example above, the scope options (such as scope: { taggableType: 'image' }) were applied to the through model, not the target model, since it was used under the through option.
+
+We can also apply an association scope on the target model. We can even do both at the same time.
+
+To illustrate this, consider an extension of the above example between tags and taggables, where each tag has a status. 
+This way, to get all pending tags of an image, we could establish another belongsToMany relationship between Image and Tag, 
+this time applying a scope on the through model and another scope on the target model:
+ */
+Image.belongsToMany(Tag, {
+    through: {
+        model: Tag_Taggable,
+        unique: false,
+        scope: {
+            taggableType: 'image'
+        }
+    },
+    scope: {
+        status: 'pending'
+    },
+    as: 'pendingTags',
+    foreignKey: 'taggableId',
+    constraints: false
+});
+
+// This way, when calling image.getPendingTags(), the following SQL query will be generated:
+SELECT
+    `tag`.`id`,
+    `tag`.`name`,
+    `tag`.`status`,
+    `tag`.`createdAt`,
+    `tag`.`updatedAt`,
+    `tag_taggable`.`tagId` AS`tag_taggable.tagId`,
+    `tag_taggable`.`taggableId` AS`tag_taggable.taggableId`,
+    `tag_taggable`.`taggableType` AS`tag_taggable.taggableType`,
+    `tag_taggable`.`createdAt` AS`tag_taggable.createdAt`,
+    `tag_taggable`.`updatedAt` AS`tag_taggable.updatedAt`
+FROM `tags` AS`tag`
+INNER JOIN `tag_taggables` AS `tag_taggable` ON
+    `tag`.`id` = `tag_taggable`.`tagId` AND
+        `tag_taggable`.`taggableId` = 1 AND
+            `tag_taggable`.`taggableType` = 'image'
+WHERE(
+    `tag`.`status` = 'pending'
+);
+
+/**
+We can see that both scopes were applied automatically:
+
+    `tag_taggable`.`taggableType` = 'image' was added automatically to the INNER JOIN;
+    `tag`.`status` = 'pending' was added automatically to an outer where clause.
+ */
