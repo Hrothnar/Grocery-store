@@ -1,5 +1,6 @@
 import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
+import { ToyCar } from "../toy_car/toy_car.js";
 
 export function getChocolateBarCreateForm(request, response) {
     response.send("This URL is under construction");
@@ -84,27 +85,21 @@ export function getChocolateBarById(request, response) {
         });
 }
 
-export function attachTagToChocolateBarById() {
 
+export function attachTagToChocolateBarById(request, response) {
+    ChocolateBar.findByPk(request.params.chocolateBarId)
+        .then((chocolateBar) => {
+            Tag.findByPk(request.params.tagId)
+                .then((tag) => {
+                    chocolateBar.addTag(tag);
+                    // chocolateBar.save();
+                    response.send("The tag has been added to the chocolateBar");
+                })
+                .catch((error) => {
+                    throw error;
+                });
+        })
+        .catch((error) => {
+            throw error;
+        });
 }
-
-// exports.addTag = (toyCarId, tagId) => Tag.findByPk(tagId)
-//     .then((tag) => {
-//         if (!tag) {
-//             console.log('Tag not found!');
-//             return null;
-//         }
-//         return ToyCar.findByPk(toyCarId)
-//             .then((toyCar) => {
-//                 if (!toyCar) {
-//                     console.log('ToyCar not found!');
-//                     return null;
-//                 }
-//                 toyCar.addTag(tag);
-//                 console.log(`>> added Tag id=${tag.id} to ToyCar id=${toyCar.id}`);
-//                 return toyCar;
-//             });
-//     })
-//     .catch((err) => {
-//         console.log('>> Error while adding Tag to ToyCar: ', err);
-//     });

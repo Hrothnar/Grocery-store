@@ -7,8 +7,7 @@ class Tag extends Model {
     const toyCar = await this.getToyCars(options);
     const lamp = await this.getLamps(options);
     const chocolateBar = await this.getChocolateBars(options);
-    toyCar.concat(lamp);
-    toyCar.concat(chocolateBar);
+    toyCar.concat(lamp, chocolateBar);
     return toyCar;
   }
 }
@@ -31,25 +30,29 @@ Tag.init({
  * A Sequelize hook which intercepts responses after finding Tag. 
  * This hook created for eager model loading, it automatically populates the taggable field in every instance.
  */
-Tag.addHook("afterFind", (result) => {
-  if (!Array.isArray(result)) {
-    result = [result];
-  };
-  for (const one of result) {
-    if (one.taggableType === "toyCar" && one.toyCar !== undefined) {
-      one.taggable = one.toyCar;
-    } else if (one.taggableType === "lamp" && one.lamp !== undefined) {
-      one.taggable = one.lamp;
-    } else if (one.taggableType === "chocolateBar" && one.chocolateBar !== undefined) {
-      one.taggable = one.chocolateBar;
-    }
-    delete one.toyCar;
-    delete one.dataValues.toyCar;
-    delete one.lamp;
-    delete one.dataValues.lamp;
-    delete one.chocolateBar;
-    delete one.dataValues.chocolateBar;
+Tag.addHook("afterFind", (tags) => {
+  if (!Array.isArray(tags)) {
+    tags = [tags];
   }
-})
+
+  const taggableList = {
+    toyCar: "toyCar",
+    lamp: "lamp",
+    chocolateBar: "chocolateBar"
+  };
+
+  for (const tag of tags) {
+    const taggableType = tag.taggableType;
+    const taggableProperty = taggableList[taggableType];
+    if (taggableProperty && tag[taggableProperty]) {
+
+      tag.taggable = tag[taggableProperty];
+      // These actions will not allow to interact with the taggable object directly. tag.toyCar, for example.
+      // Should get objects (whenever type they are) from a tag through the "taggable" field.
+      delete tag[taggableProperty];
+      delete tag.dataValues[taggableProperty];
+    }
+  }
+});
 
 export { Tag };
