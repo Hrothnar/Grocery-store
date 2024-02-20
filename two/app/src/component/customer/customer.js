@@ -1,11 +1,11 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../../configuration/db_config.js";
 
-class Lamp extends Model {
+class Customer extends Model {
 
 }
 
-Lamp.init({
+Customer.init({
     id: {
         type: DataTypes.BIGINT,
         allowNull: false,
@@ -19,12 +19,18 @@ Lamp.init({
         allowNull: false,
         unique: true,
         field: "name"
-    }
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        unique: false,
+        field: "is_active"
+    },
 }, {
     sequelize: sequelize,
     timestamps: true,
-    modelName: "Lamp",
-    tableName: "lamps",
+    modelName: "Customer",
+    tableName: "customers",
 });
 
-export { Lamp };
+export { Customer };

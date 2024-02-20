@@ -1,6 +1,5 @@
 import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
-import { ToyCar } from "../toy_car/toy_car.js";
 
 export function getChocolateBarCreateForm(request, response) {
     response.send("This URL is under construction");
@@ -36,7 +35,7 @@ export function updateChocolateBarById(request, response) {
         isAvailable: request.body.isAvailable
     };
 
-    ChocolateBar.update(update, { where: { id: request.parameters.id } })
+    ChocolateBar.update(update, { where: { id: request.params.id } })
         .then(() => {
             response.send("This entity was updated");
         })
@@ -56,7 +55,7 @@ export function removeAllChocolateBars(request, response) {
 }
 
 export function removeChocolateBarById(request, response) {
-    ChocolateBar.destroy({ where: { id: request.parameters.id } })
+    ChocolateBar.destroy({ where: { id: request.params.id } })
         .then(() => {
             response.send("This entity was deleted");
         })
@@ -76,7 +75,7 @@ export function getAllChocolateBars(request, response) {
 }
 
 export function getChocolateBarById(request, response) {
-    ChocolateBar.findOne({ id: request.parameters.id })
+    ChocolateBar.findOne({ id: request.params.id })
         .then((chocolateBar) => {
             response.send(chocolateBar);
         })
@@ -84,7 +83,6 @@ export function getChocolateBarById(request, response) {
             throw error;
         });
 }
-
 
 export function attachTagToChocolateBarById(request, response) {
     ChocolateBar.findByPk(request.params.chocolateBarId)
