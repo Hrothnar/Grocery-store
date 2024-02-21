@@ -7,6 +7,7 @@ export function status500(error, request, response, next) {
         root: path.join(import.meta.dirname, "../../view")
     };
     response.status(code);
+    // response.send(error.message);
     response.sendFile("status500.html", option, (error) => {
         if (error) {
             response.send("Internal Error");
