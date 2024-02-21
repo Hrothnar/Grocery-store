@@ -5,7 +5,7 @@ export function fillDatabase() {
 }
 
 const filler = () => {
-    deleteEntities();
+    // deleteEntities();
     createEntities();
 }
 
