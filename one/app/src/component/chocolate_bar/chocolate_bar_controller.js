@@ -1,80 +1,47 @@
-import { ChocolateBar } from "./chocolate_bar.js";
-import { Tag } from "../tag/tag.js";
 import * as chocolateBarValidator from "./chocolate_bar_validator.js";
 import * as chocolateBarService from "./chocolate_bar_service.js";
 import * as responseSender from "../../sender/response_sender.js";
+// import { log } from "../../util/logger/http_logger.js";
 
 export function getChocolateBarCreateForm(request, response) {
     response.send("This URL is under construction");
 }
 
-// export async function createChocolateBar(request, response) {
-//     try {
-//         let chocolateBar = await chocolateBarValidator.validateChocolateBar(request.body);
-//         chocolateBar = await chocolateBarService.createChocolateBar(chocolateBar);
-//         responseSender.sendCreatedResponse(chocolateBar, response);
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
-// export function createChocolateBar(request, response) {
-//     chocolateBarValidator.validateChocolateBar(request.body)
-//         .then((chocolateBar) => {
-//             chocolateBarService.createChocolateBar(chocolateBar)
-//                 .then((chocolateBar) => {
-//                     responseSender.sendCreatedResponse(chocolateBar, response);
-//                 })
-//                 .catch((error) => {
-//                     throw error;
-//                 });
-//         })
-//         .catch((error) => {
-//             throw error;
-//         });
-// }
-
-export function createChocolateBar(request, response, next) {
-    // some logic
-    next();
+export function createChocolateBar(request, response) {
+    // log(request, response);
+    chocolateBarValidator.validateChocolateBar(request.body)
+        .then((chocolateBar) => {
+            chocolateBarService.createChocolateBar(chocolateBar)
+                .then((chocolateBar) => {
+                    responseSender.sendCreatedResponse(chocolateBar, response);
+                })
+                .catch((error) => {
+                    throw error;
+                });
+        })
+        .catch((error) => {
+            throw error;
+        });
 }
 
-
-
-// export function createChocolateBar(request, response) {
-//     ChocolateBar.create({
-//         name: request.body.name,
-//         type: request.body.type,
-//         price: request.body.price,
-//         amount: request.body.amount,
-//         isAvailable: request.body.isAvailable
-//     })
-//         .then((chocolateBar) => {
-//             console.log(`Created ChocolateBar: ${JSON.stringify(chocolateBar, null, 2)}`);
-//             response.send(`Created ChocolateBar: ${JSON.stringify(chocolateBar, null, 2)}`)
-//         })
-//         .catch((error) => {
-//             throw error;
-//         });
+// export function createChocolateBar(request, response, next) {
+//     next();
 // }
-
 
 export function getChocolateBarEditFormById(request, response) {
     response.send("This URL is under construction");
 }
 
 export function updateChocolateBarById(request, response) {
-    const update = {
-        name: request.body.name,
-        type: request.body.type,
-        price: request.body.price,
-        amount: request.body.amount,
-        isAvailable: request.body.isAvailable
-    };
-
-    ChocolateBar.update(update, { where: { id: request.params.id } })
-        .then(() => {
-            response.send("This entity was updated");
+    chocolateBarValidator.validateChocolateBar(request.body)
+        .then((chocolateBar) => {
+            chocolateBarService.updateChocolateBar(chocolateBar, request.params.id)
+                .then((array) => {
+                    responseSender.sendUpdatedResponse(array, response);
+                })
+                .catch((error) => {
+                    throw error;
+                });
         })
         .catch((error) => {
             throw error;
@@ -82,9 +49,9 @@ export function updateChocolateBarById(request, response) {
 }
 
 export function removeAllChocolateBars(request, response) {
-    ChocolateBar.destroy({ where: {} })
-        .then(() => {
-            response.send("All entities were deleted");
+    chocolateBarService.removeAllChocolateBars()
+        .then((rows) => {
+            responseSender.sendDeletedResponse(rows, response);
         })
         .catch((error) => {
             throw error;
@@ -92,9 +59,9 @@ export function removeAllChocolateBars(request, response) {
 }
 
 export function removeChocolateBarById(request, response) {
-    ChocolateBar.destroy({ where: { id: request.params.id } })
-        .then(() => {
-            response.send("This entity was deleted");
+    chocolateBarService.removeChocolateBarById(request.params.id)
+        .then((row) => {
+            responseSender.sendDeletedResponse(row, response);
         })
         .catch((error) => {
             throw error;
@@ -102,9 +69,9 @@ export function removeChocolateBarById(request, response) {
 }
 
 export function getAllChocolateBars(request, response) {
-    ChocolateBar.findAll({})
+    chocolateBarService.getAllChocolateBars()
         .then((chocolateBars) => {
-            response.send(chocolateBars);
+            responseSender.sendGotResponse(chocolateBars, response);
         })
         .catch((error) => {
             throw error;
@@ -112,27 +79,20 @@ export function getAllChocolateBars(request, response) {
 }
 
 export function getChocolateBarById(request, response) {
-    ChocolateBar.findOne({ id: request.params.id })
+    chocolateBarService.getChocolateBarById(request.params.id)
         .then((chocolateBar) => {
-            response.send(chocolateBar);
+            responseSender.sendGotResponse(chocolateBar, response);
         })
         .catch((error) => {
             throw error;
         });
 }
 
+
 export function attachTagToChocolateBarById(request, response) {
-    ChocolateBar.findByPk(request.params.chocolateBarId)
+    chocolateBarService.attachTagToChocolateBarById(request.params.chocolateBarId, request.params.tagId)
         .then((chocolateBar) => {
-            Tag.findByPk(request.params.tagId)
-                .then((tag) => {
-                    chocolateBar.addTag(tag);
-                    // chocolateBar.save();
-                    response.send("The tag has been added to the chocolateBar");
-                })
-                .catch((error) => {
-                    throw error;
-                });
+            responseSender.sendGotResponse(chocolateBar, response);
         })
         .catch((error) => {
             throw error;
