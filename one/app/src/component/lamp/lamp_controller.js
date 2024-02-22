@@ -1,6 +1,3 @@
-import { Lamp } from "./lamp.js";
-import { Tag } from "../tag/tag.js";
-
 export function getLampCreateForm(request, response) {
     response.send("This URL is under construction");
 }

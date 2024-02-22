@@ -24,7 +24,7 @@ Lamp.init({
     sequelize: sequelize,
     timestamps: true,
     modelName: "Lamp",
-    tableName: "lamps",
+    tableName: "lamps"
 });
 
 export { Lamp };

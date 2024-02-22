@@ -1,20 +1,20 @@
 import express from "express";
 import * as chocolateBarController from "./chocolate_bar_controller.js";
-import * as chocolateBarValidator from "./chocolate_bar_validator.js";
-import * as chocolateBarService from "./chocolate_bar_service.js";
-import * as responseSender from "../../sender/response_sender.js";
+// import * as chocolateBarValidator from "./chocolate_bar_validator.js";
+// import * as chocolateBarService from "./chocolate_bar_service.js";
+// import * as responseSender from "../../sender/response_sender.js";
 
 export function registerChocolateBarRouters(app) {
     const router = express.Router();
 
     router.get("/create", chocolateBarController.getChocolateBarCreateForm);
-    // router.post("/create", chocolateBarController.createChocolateBar);
+    router.post("/create", chocolateBarController.createChocolateBar);
 
-    router.post("/create",
-        chocolateBarController.createChocolateBar,
-        chocolateBarValidator.validateChocolateBar,
-        chocolateBarService.createChocolateBar,
-        responseSender.sendCreatedResponse);
+    // router.post("/create",
+    //     chocolateBarController.createChocolateBar,
+    //     chocolateBarValidator.validateChocolateBar,
+    //     chocolateBarService.createChocolateBar,
+    //     responseSender.sendCreatedResponse);
 
     router.get("/:id/edit", chocolateBarController.getChocolateBarEditFormById);
     router.put("/:id/edit", chocolateBarController.updateChocolateBarById);
