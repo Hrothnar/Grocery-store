@@ -29,7 +29,7 @@ Taggable.init({
     },
 }, {
     sequelize: sequelize,
-    timestamps: true,
+    timestamps: false,
     modelName: "Taggable",
     tableName: "taggables",
 });

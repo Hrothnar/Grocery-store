@@ -88,7 +88,6 @@ export function getChocolateBarById(request, response) {
         });
 }
 
-
 export function attachTagToChocolateBarById(request, response) {
     chocolateBarService.attachTagToChocolateBarById(request.params.chocolateBarId, request.params.tagId)
         .then((chocolateBar) => {

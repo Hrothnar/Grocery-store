@@ -53,7 +53,7 @@ Product.init({
     }
 }, {
     sequelize: sequelize,
-    timestamps: true,
+    timestamps: false,
     modelName: "Product",
     tableName: "products",
 });

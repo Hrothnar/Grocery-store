@@ -68,7 +68,6 @@ export function getAllChocolateBars() {
         });
 }
 
-
 export function getChocolateBarById(id) {
     return ChocolateBar.findOne({ id: id })
         .then((chocolateBar) => {

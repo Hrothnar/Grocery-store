@@ -22,9 +22,9 @@ ChocolateBar.init({
     }
 }, {
     sequelize: sequelize,
-    timestamps: true,
+    timestamps: false,
     modelName: "ChocolateBar",
     tableName: "chocolate_bars"
-})
+});
 
 export { ChocolateBar };
