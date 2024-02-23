@@ -22,7 +22,7 @@ Lamp.init({
     }
 }, {
     sequelize: sequelize,
-    timestamps: true,
+    timestamps: false,
     modelName: "Lamp",
     tableName: "lamps"
 });
