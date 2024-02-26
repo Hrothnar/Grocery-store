@@ -7,8 +7,8 @@ class Tag extends Model {
         const toyCar = await this.getToyCars(options);
         const lamp = await this.getLamps(options);
         const chocolateBar = await this.getChocolateBars(options);
-        toyCar.concat(lamp, chocolateBar);
-        return toyCar;
+        const all = toyCar.concat(lamp, chocolateBar);
+        return all;
     }
 }
 

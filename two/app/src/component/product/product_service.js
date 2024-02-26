@@ -33,7 +33,7 @@ export function removeProductById(id) {
 export function getAllProducts() {
     return Product.findAll({})
         .then((products) => {
-            return products.dataValues;
+            return products;
         })
         .catch((error) => {
             throw error;

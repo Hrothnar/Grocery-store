@@ -45,21 +45,21 @@ const createEntities = () => {
             });
     }
 
-    // axios.post("http://127.0.0.1:1111/tag/create", {
-    //     name: "tag1"
-    // })
-    //     .then((response) => {
-    //         // console.log(response);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
+    axios.post("http://127.0.0.1:1111/tag/create", {
+        name: "tag1"
+    })
+        .then((response) => {
+            // console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
-    // axios.get("http://127.0.0.1:1111/chocolate_bar/1/1")
-    //     .then((response) => {
-    //         // console.log(response);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
+    axios.get("http://127.0.0.1:1111/chocolate_bar/1/1")
+        .then((response) => {
+            // console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }

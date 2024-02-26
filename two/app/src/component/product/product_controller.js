@@ -42,7 +42,6 @@ export function removeProductById(request, response) {
 export function getAllProducts(request, response) {
     productService.getAllProducts()
         .then((products) => {
-            console.log("🚀 ~ .then ~ products:", products)
             responseSender.returnGotResponse(products, response);
         })
         .catch((error) => {

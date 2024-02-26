@@ -29,7 +29,7 @@ export function removeProductById(request, response) {
 export function getAllProducts(request, response) {
     productService.getAllProducts()
         .then((products) => {
-            responseSender.sendGotResponse(products.data, response);
+            responseSender.sendGotResponse(products, response);
         })
         .catch((error) => {
             throw error;
@@ -37,4 +37,5 @@ export function getAllProducts(request, response) {
 }
 
 export function getProductById(request, response) {
+    
 }

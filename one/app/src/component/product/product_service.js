@@ -32,7 +32,7 @@ export function removeProductById(id) {
 export function getAllProducts() {
     return axios.get("http://127.0.0.1:3333/product")
         .then((products) => {
-            return getPreparedProducts(products)
+            return getPreparedProducts(products.data)
                 .then((preparedProducts) => {
                     return preparedProducts;
                 })
@@ -73,19 +73,10 @@ async function getPreparedProducts(products) {
     }
 
     for (const one of products) {
-        one.name = all[one.productType][one.productId][one.name];
+        one.name = all[one.productType][one.productId]["name"];
+        one.id = one.productId;
+        delete one.productId;
     }
 
-
-    console.log(products)
-
-    // const some = {ChocolateBar: chocolateBarsMap}
-    // console.log(some);
-
-
-
-}
-
-function getHash(param1, param2) {
-
+    return products;
 }
