@@ -18,11 +18,11 @@ export function createTag(request, response) {
 }
 
 export function getTagEditForm(request, response) {
-
+    response.send("This URL is under construction");
 }
 
 export function updateTag(request, response) {
-
+    response.send("This URL is under construction");
 }
 
 export function removeAllTags(request, response) {
@@ -36,7 +36,7 @@ export function removeAllTags(request, response) {
 }
 
 export function removeTagById(request, response) {
-
+    response.send("This URL is under construction");
 }
 
 export function getAllTags(request, response) {
@@ -50,5 +50,5 @@ export function getAllTags(request, response) {
 }
 
 export function getTagById(request, response) {
-
+    response.send("This URL is under construction");
 }

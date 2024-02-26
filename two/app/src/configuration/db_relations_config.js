@@ -1,32 +1,10 @@
-import { DataTypes } from "sequelize";
-
 import { Product } from "../component/product/product.js";
 import { Customer } from "../component/customer/customer.js";
 import { Sale } from "../component/sale/sale.js";
+import { SaleCustomer, SaleProduct } from "../component/other/join/join_models.js";
 
-import { sequelize } from "../configuration/db_config.js";
 
 export function setupModelRelations() {
-
-    const SaleCustomer = sequelize.define("SaleCustomer", {
-        sale_id: {
-            type: DataTypes.BIGINT,
-            references: {
-                model: Sale,
-                key: "id"
-            },
-        },
-        customer_id: {
-            type: DataTypes.BIGINT,
-            references: {
-                model: Customer,
-                key: "id"
-            },
-        },
-    }, {
-        tableName: "sale_customer",
-        timestamps: false
-    });
 
     Customer.belongsToMany(Sale, {
         through: SaleCustomer,
@@ -40,15 +18,15 @@ export function setupModelRelations() {
         timestamps: false
     });
 
-    // Sale.belongsToMany(Product, {
-    //     through: "sale_product",
-    //     // foreignKey: "sale_id",
-    //     timestamps: false
-    // });
+    Sale.belongsToMany(Product, {
+        through: SaleProduct,
+        foreignKey: "sale_id",
+        timestamps: false
+    });
 
-    // Product.belongsToMany(Sale, {
-    //     through: "sale_customer",
-    //     // foreignKey: "product_id",
-    //     timestamps: false
-    // });
+    Product.belongsToMany(Sale, {
+        through: SaleProduct,
+        foreignKey: "product_id",
+        timestamps: false
+    });
 }

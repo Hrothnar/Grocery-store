@@ -5,7 +5,7 @@ export function fillDatabase() {
 }
 
 const filler = () => {
-    // deleteEntities();
+    deleteEntities();
     createEntities();
 }
 
@@ -29,19 +29,21 @@ const deleteEntities = () => {
 }
 
 const createEntities = () => {
-    axios.post("http://127.0.0.1:1111/chocolate_bar/create", {
-        name: "ChocolateBar1",
-        type: "Sweet",
-        price: 220,
-        amount: 1,
-        isAvailable: true
-    })
-        .then((response) => {
-            // console.log(response);
+    for (let i = 1; i <= 2; i++) {
+        axios.post("http://127.0.0.1:1111/chocolate_bar/create", {
+            name: `ChocolateBar${i}`,
+            category: "Chocolate",
+            price: 30 * i,
+            amount: i,
+            isAvailable: true
         })
-        .catch((error) => {
-            console.log(error);
-        });
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     axios.post("http://127.0.0.1:1111/tag/create", {
         name: "tag1"
