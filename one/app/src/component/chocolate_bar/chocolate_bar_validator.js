@@ -2,13 +2,12 @@ export function validateChocolateBar(requestBody) {
     return new Promise((resolve, reject) => {
         const chocolateBar = {
             name: requestBody.name,
-            type: requestBody.type,
+            category: requestBody.category,
             price: requestBody.price,
             amount: requestBody.amount,
             isAvailable: requestBody.isAvailable
         }
         if (requestBody.name !== "Snickers") {
-            console.log("ChocolateBar has been validate");
             return resolve(chocolateBar);
         }
         return reject(new Error("Validation failed"));

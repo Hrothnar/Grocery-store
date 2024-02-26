@@ -1,10 +1,26 @@
+import * as productValidator from "./product_validator.js";
+import * as productService from "./product_service.js";
+import * as responseSender from "../../sender/response_sender.js";
+import { Product } from "./product.js";
 
 export function getProductCreateForm(request, response) {
     response.send("This URL is under construction");
 }
 
 export function createProduct(request, response) {
-    response.send("This URL is under construction");
+    productValidator.validateProduct(request.body)
+        .then((product) => {
+            productService.createProduct(product)
+                .then((product) => {
+                    responseSender.returnCreatedResponse(product, response);
+                })
+                .catch((error) => {
+                    throw error;
+                });
+        })
+        .catch((error) => {
+            throw error;
+        });
 }
 
 export function getProductEditFormById(request, response) {
@@ -24,7 +40,14 @@ export function removeProductById(request, response) {
 }
 
 export function getAllProducts(request, response) {
-    response.send("This URL is under construction");
+    productService.getAllProducts()
+        .then((products) => {
+            console.log("🚀 ~ .then ~ products:", products)
+            responseSender.returnGotResponse(products, response);
+        })
+        .catch((error) => {
+            throw error;
+        });
 }
 
 export function getProductById(request, response) {

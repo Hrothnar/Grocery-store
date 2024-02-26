@@ -1,14 +1,12 @@
 import * as chocolateBarValidator from "./chocolate_bar_validator.js";
 import * as chocolateBarService from "./chocolate_bar_service.js";
 import * as responseSender from "../../sender/response_sender.js";
-// import { log } from "../../util/logger/http_logger.js";
 
 export function getChocolateBarCreateForm(request, response) {
     response.send("This URL is under construction");
 }
 
 export function createChocolateBar(request, response) {
-    // log(request, response);
     chocolateBarValidator.validateChocolateBar(request.body)
         .then((chocolateBar) => {
             chocolateBarService.createChocolateBar(chocolateBar)
