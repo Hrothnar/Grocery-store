@@ -53,7 +53,16 @@ export function removeChocolateBarById(id) {
         });
 }
 export function getAllChocolateBars() {
-    return ChocolateBar.findAll({})
+    const include = {
+        include: {
+            model: Tag,
+            through: "taggables",
+            attributes: ["id", "name"]
+        },
+        attributes: ["id", "name"]
+    };
+
+    return ChocolateBar.findAll(include)
         .then((chocolateBars) => {
             return chocolateBars;
         })
@@ -75,7 +84,7 @@ export function getChocolateBarById(id) {
 export function attachTagToChocolateBarById(chocolateBarId, tagId) {
     return ChocolateBar.findByPk(chocolateBarId)
         .then((chocolateBar) => {
-            Tag.findByPk(tagId)
+            return Tag.findByPk(tagId)
                 .then((tag) => {
                     chocolateBar.addTag(tag);
                     return chocolateBar;
