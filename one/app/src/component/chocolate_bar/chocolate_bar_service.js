@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
+import { raw } from "express";
 
 export function createChocolateBar(chocolateBar) {
     return ChocolateBar.create(chocolateBar)
@@ -54,15 +55,12 @@ export function removeChocolateBarById(id) {
 }
 export function getAllChocolateBars() {
     const include = {
-        include: {
-            model: Tag,
-            through: "taggables",
-            attributes: ["id", "name"]
-        },
+        model: Tag,
+        through: "taggables",
         attributes: ["id", "name"]
     };
 
-    return ChocolateBar.findAll(include)
+    return ChocolateBar.findAll({ include: include })
         .then((chocolateBars) => {
             return chocolateBars;
         })
