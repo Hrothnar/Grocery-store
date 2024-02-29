@@ -48,23 +48,33 @@ export function getProductById(id) {
 
 }
 
-async function getPreparedProducts(products) {
-    // const chocolateBars = await chocolateBarService.getAllChocolateBars();
-    // const lamps = await lampService.getAllLamps();
-    // const toyCars = await toyCarService.getAllToyCars();
+async function getPreparedProducts(productsFromTwo) {
+    const chocolateBars = await chocolateBarService.getAllChocolateBars();
+    const lamps = await lampService.getAllLamps();
+    const toyCars = await toyCarService.getAllToyCars();
 
-    const all = {
-        ChocolateBar: await chocolateBarService.getAllChocolateBars(),
-        Lamp: await lampService.getAllLamps(),
-        ToyCar: await toyCarService.getAllToyCars()
-    };
+    // const all = {
+    //     ChocolateBar: await chocolateBarService.getAllChocolateBars(),
+    //     Lamp: await lampService.getAllLamps(),
+    //     ToyCar: await toyCarService.getAllToyCars()
+    // };
 
-    for (const one of all) {
-        for (const model of one) {
-            all.one[model.dataValues.id] = model.dataValues;
+    let map = {};
+    const productsFromOne = [chocolateBars, lamps, toyCars];
+    for (const productType of productsFromOne) {
+        if (productType[0]) {
+            map[productType[0].constructor.name] = {};
+        }
+        for (const product of productType) {
+            map[product.constructor.name][product.dataValues.id] = product.dataValues;
+
         }
     }
+    console.log("🚀 ~ getPreparedProducts ~ map:", map);
 
+    for (const one of productsFromTwo) {
+
+    }
 
     // for (const chocolateBar of chocolateBars) {
     //     all.ChocolateBar[chocolateBar.dataValues.id] = chocolateBar.dataValues;
@@ -78,12 +88,7 @@ async function getPreparedProducts(products) {
     //     all.ChocolateBar[toyCar.dataValues.id] = toyCar.dataValues;
     // }
 
-    for (const one of products) {
-        one.name = all[one.productType][one.productId]["name"];
-        one.tags = all[one.productType][one.productId]["Tags"];
-        one.id = one.productId;
-        delete one.productId;
-    }
 
-    return products;
+
+    return productsFromTwo;
 }

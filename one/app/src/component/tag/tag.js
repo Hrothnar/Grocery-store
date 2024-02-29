@@ -26,35 +26,35 @@ Tag.init({
     tableName: "tags",
 })
 
-/**
- * A Sequelize hook which intercepts responses after finding Tag. 
- * This hook created for eager model loading, it automatically populates the taggable field in every instance.
- */
-Tag.addHook("afterFind", (tags) => {
-    if (!Array.isArray(tags)) {
-        tags = [tags];
-    }
+// /**
+//  * A Sequelize hook which intercepts responses after finding Tag. 
+//  * This hook created for eager model loading, it automatically populates the taggable field in every instance.
+//  */
+// Tag.addHook("afterFind", (tags) => {
+//     if (!Array.isArray(tags)) {
+//         tags = [tags];
+//     }
 
-    const taggableList = {
-        toyCar: "toyCar",
-        lamp: "lamp",
-        chocolateBar: "chocolateBar"
-    };
+//     const taggableList = {
+//         toyCar: "toyCar",
+//         lamp: "lamp",
+//         chocolateBar: "chocolateBar"
+//     };
 
-    for (const tag of tags) {
-        const taggableType = tag.taggableType;
-        const taggableProperty = taggableList[taggableType];
-        if (taggableProperty && tag[taggableProperty]) {
+//     for (const tag of tags) {
+//         const taggableType = tag.taggableType;
+//         const taggableProperty = taggableList[taggableType];
+//         if (taggableProperty && tag[taggableProperty]) {
 
-            tag.taggable = tag[taggableProperty];
-            /**
-             * These actions will not allow to interact with the taggable object directly. tag.toyCar, for example.
-             * Should get objects (whenever type they are) from a tag through the "taggable" field.
-             */
-            delete tag[taggableProperty];
-            delete tag.dataValues[taggableProperty];
-        }
-    }
-});
+//             tag.taggable = tag[taggableProperty];
+//             /**
+//              * These actions will not allow to interact with the taggable object directly. tag.toyCar, for example.
+//              * Should get objects (whenever type they are) from a tag through the "taggable" field.
+//              */
+//             delete tag[taggableProperty];
+//             delete tag.dataValues[taggableProperty];
+//         }
+//     }
+// });
 
 export { Tag };
