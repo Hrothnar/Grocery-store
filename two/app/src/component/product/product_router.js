@@ -6,7 +6,8 @@ export function registerProductRouters(app) {
 
     router.post("/create", productController.createProduct);
     router.get("/", productController.getAllProducts);
-    router.get("/:id", productController.getAllProducts);
+    router.get("/:id", productController.getProductById);
+    router.delete("/", productController.removeAllProducts);
 
     app.use("/product", router);
 }

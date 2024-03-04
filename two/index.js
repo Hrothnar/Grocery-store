@@ -26,7 +26,7 @@ app.listen(port, () => {
   console.log(`The express.js server has started and is listening on port: ${port}`);
 });
 
-sequelize.sync({ force: true, alter: false })
+sequelize.sync({ force: true })
   .then(() => {
     console.log("\nSequelize schemas were created");
     console.log("============================================================================");

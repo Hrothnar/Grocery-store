@@ -19,7 +19,13 @@ export function updateProductById(request, response) {
 }
 
 export function removeAllProducts(request, response) {
-    response.send("This URL is under construction");
+    productService.removeAllProducts()
+        .then((rows) => {
+            responseSender.sendDeletedResponse(rows, response);
+        })
+        .catch((error) => {
+            throw error;
+        });
 }
 
 export function removeProductById(request, response) {
@@ -37,5 +43,11 @@ export function getAllProducts(request, response) {
 }
 
 export function getProductById(request, response) {
-    
+    productService.getProductById(request.params.id)
+        .then((product) => {
+            responseSender.sendGotResponse(product, response);
+        })
+        .catch((error) => {
+            throw error;
+        })
 }
