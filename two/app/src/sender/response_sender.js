@@ -19,17 +19,21 @@ export function sendGotResponse(data, response) {
 }
 
 export function returnCreatedResponse(data, response) {
+    response.status(200);
     response.send(data);
 }
 
 export function returnUpdatedResponse(data, response) {
+    response.status(200);
     response.send(data);
 }
 
 export function returnDeletedResponse(data, response) {
-    response.send(data);
+    response.status(200);
+    response.send(String(data));
 }
 
 export function returnGotResponse(data, response) {
+    response.status(200);
     response.send(data);
 }

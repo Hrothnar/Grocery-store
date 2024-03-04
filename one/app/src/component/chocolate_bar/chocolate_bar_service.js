@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
-import { raw } from "express";
+import { Taggable } from "../other/taggable/taggable.js";
 
 export function createChocolateBar(chocolateBar) {
     return ChocolateBar.create(chocolateBar)
@@ -36,8 +36,14 @@ export function updateChocolateBar(chocolateBar, id) {
 
 export function removeAllChocolateBars() {
     return ChocolateBar.destroy({ where: {} })
-        .then((rows) => {
-            return rows;
+        .then((chocolateRows) => {
+            return Taggable.destroy({ where: { taggable_type: "chocolateBar" } })
+                .then((taggableRows) => {
+                    return chocolateRows;
+                })
+                .catch((error) => {
+                    throw error;
+                });
         })
         .catch((error) => {
             throw error;

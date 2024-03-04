@@ -23,7 +23,13 @@ export function updateProductById(product, id) {
 }
 
 export function removeAllProducts() {
-
+    return Product.destroy({ where: {} })
+        .then((rows) => {
+            return rows;
+        })
+        .catch((error) => {
+            throw error;
+        });
 }
 
 export function removeProductById(id) {
@@ -42,5 +48,11 @@ export function getAllProducts() {
 }
 
 export function getProductById(id) {
-
+    return Product.findOne({ where: { id: id } })
+        .then((products) => {
+            return products;
+        })
+        .catch((error) => {
+            throw error;
+        });
 }

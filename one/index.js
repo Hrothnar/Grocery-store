@@ -19,7 +19,7 @@ app.use(log); // custom middleware for logging HTTP requests
 
 setupModelRelations();
 registerAppRouters(app);
-// fillDatabase();
+fillDatabase();
 
 app.use([status500, status404]);
 
@@ -28,7 +28,7 @@ app.listen(port, () => {
   console.log(`The express.js server has started and is listening on port: ${port}`);
 });
 
-sequelize.sync({ force: false })
+sequelize.sync({ force: true })
   .then(() => {
     console.log("\nSequelize schemas were created");
     console.log("============================================================================");
