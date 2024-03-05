@@ -21,6 +21,7 @@ export function setupModelRelations() {
     Sale.belongsToMany(Product, {
         through: SaleProduct,
         foreignKey: "sale_id",
+        onDelete: "CASCADE",
         timestamps: false
     });
 

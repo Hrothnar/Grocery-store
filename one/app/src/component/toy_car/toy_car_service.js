@@ -32,12 +32,8 @@ export function removeToyCarById(id) {
 
 export function getAllToyCars() {
     const include = {
-        include: {
-            model: Tag,
-            through: "taggables",
-            attributes: ["id", "name"]
-        },
-        attributes: ["id", "name"]
+        model: Tag,
+        through: "taggables", // if use the 'Taggable' Model as an argument then it'll include Tags only for the first call and i don't know why
     };
 
     return ToyCar.findAll(include)

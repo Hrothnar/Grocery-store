@@ -20,7 +20,7 @@ Sale.init({
         unique: false,
         field: "product_id"
     },
-    deliveryData: {
+    deliveryDate: {
         type: DataTypes.STRING,
         allowNull: true,
         unique: false,
