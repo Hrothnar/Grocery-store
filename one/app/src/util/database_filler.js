@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export function fillDatabase() {
-    setTimeout((filler), 2000);
+    setTimeout((filler), 500);
 }
 
 const filler = () => {

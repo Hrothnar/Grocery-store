@@ -10,7 +10,7 @@ export function registerProductRouters(app) {
 
     router.get("/create", productController.getProductCreateForm); // should return an HTML choosing page, where a User could choose which particular product they wants to create
 
-    router.get("/delete", productController.removeAllProducts);
+    router.get("/delete", productController.removeAllProducts); // temporal endpoint
     router.delete("/", productController.removeAllProducts);
 
     router.get("/", productController.getAllProducts);

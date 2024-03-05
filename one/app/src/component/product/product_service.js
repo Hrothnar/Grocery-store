@@ -99,7 +99,6 @@ async function getPreparedProducts(productsFromTwo) {
 }
 
 async function getPreparedProduct(productFromTwo) {
-    console.log("🚀 ~ getPreparedProduct ~ productFromTwo:", productFromTwo);
     const map = await getMappedProducts();
     const productType = map[productFromTwo.productType];
     const productFromOne = productType[productFromTwo.productId];
@@ -123,7 +122,7 @@ async function getMappedProducts() {
         }
         for (const product of productType) {
             map[product.constructor.name][product.dataValues.id] = product.dataValues;
-
+            
         }
     }
     return map;

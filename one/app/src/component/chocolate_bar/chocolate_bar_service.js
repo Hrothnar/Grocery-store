@@ -24,7 +24,7 @@ export function createChocolateBar(chocolateBar) {
         });
 }
 
-export function updateChocolateBar(chocolateBar, id) {
+export function updateChocolateBarById(chocolateBar, id) {
     return ChocolateBar.update(chocolateBar, { where: { id: id } })
         .then((array) => {
             return array;
@@ -59,11 +59,11 @@ export function removeChocolateBarById(id) {
             throw error;
         });
 }
+
 export function getAllChocolateBars() {
     const include = {
         model: Tag,
-        through: "taggables",
-        attributes: ["id", "name"]
+        through: "taggables", // if use the 'Taggable' Model as an argument then it'll include Tags only for the first call and i don't know why
     };
 
     return ChocolateBar.findAll({ include: include })
