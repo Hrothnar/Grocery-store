@@ -38,7 +38,7 @@ const createEntities = () => {
             isAvailable: true
         })
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -49,7 +49,7 @@ const createEntities = () => {
         name: "tag1"
     })
         .then((response) => {
-            // console.log(response);
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
@@ -57,7 +57,19 @@ const createEntities = () => {
 
     axios.get("http://127.0.0.1:1111/chocolate_bar/1/1")
         .then((response) => {
-            // console.log(response);
+            // console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+
+    axios.post("http://127.0.0.1:1111/customer/create", {
+        name: "Tom",
+        isActive: true
+    })
+        .then((response) => {
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);

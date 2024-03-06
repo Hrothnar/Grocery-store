@@ -6,7 +6,7 @@ export function getSaleCreateForm(request, response) {
 }
 
 export function createSale(request, response) {
-    saleService.createSale(request.params.id)
+    saleService.createSale(request.params.customerId, request.params.productId)
         .then((sale) => {
             responseSender.returnCreatedResponse(sale, response);
         })

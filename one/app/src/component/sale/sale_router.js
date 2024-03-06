@@ -6,8 +6,8 @@ export function registerSaleRouters(app) {
 
     router.get("/delete", saleController.removeAllSales);
     // router.delete("/", saleController.removeAllSales);
-    
-    router.get("/buy/:id", saleController.createSale);
+
+    router.get("/buy/:customerId/:productId", saleController.createSale);
     router.get("/", saleController.getAllSales);
     router.get("/:id", saleController.getSaleById);
 

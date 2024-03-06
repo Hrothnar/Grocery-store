@@ -1,11 +1,12 @@
 import { Product } from "../product/product.js";
+import { Customer } from "../customer/customer.js";
 import { Sale } from "./sale.js";
 
 export function getSaleCreateForm() {
 
 }
 
-export function createSale(productId) {
+export function createSale(customerId, productId) {
     const sale = {
         productId: productId,
         deliveryDate: String(new Date())
@@ -14,6 +15,7 @@ export function createSale(productId) {
     return Sale.create(sale)
         .then((sale) => {
             sale.addProducts([productId]);
+            sale.addCustomers([customerId]);
             return sale;
         })
         .catch((error) => {
@@ -44,10 +46,13 @@ export function removeSaleById(id) {
 }
 
 export function getAllSales() {
-    const include = {
+    const include = [{
         model: Product,
         through: "sale_product",
-    };
+    }, {
+        model: Customer,
+        through: "sale_customer",
+    }];
 
     return Sale.findAll({ include: include })
         .then((sales) => {
@@ -59,10 +64,13 @@ export function getAllSales() {
 }
 
 export function getSaleById(id) {
-    const include = {
+    const include = [{
         model: Product,
         through: "sale_product",
-    };
+    }, {
+        model: Customer,
+        through: "sale_customer",
+    }];
 
     return Sale.findOne({ include: include, where: { id: id } })
         .then((sale) => {
