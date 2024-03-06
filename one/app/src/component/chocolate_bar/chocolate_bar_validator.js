@@ -14,6 +14,7 @@ export function validateChocolateBar(requestBody) {
     });
 }
 
+// Part of alternative approach of handling request
 // export function validateChocolateBar(request, response, next) {
 //     const chocolateBar = {
 //         name: request.body.name,

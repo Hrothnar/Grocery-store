@@ -6,7 +6,7 @@ export function registerCustomerRouters(app) {
 
     router.get("/delete", customerController.removeAllCustomers); // temporarily
     // router.delete("/", customerController.removeAllCustomers);
-    // router.get("/create", customerController.getCustomerCreateForm);
+    router.get("/create", customerController.getCustomerCreateForm);
     router.post("/create", customerController.createCustomer);
     router.get("/", customerController.getAllCustomers);
     router.get("/:id", customerController.getCustomerById);

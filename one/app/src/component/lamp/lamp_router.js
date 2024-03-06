@@ -7,7 +7,7 @@ export function registerLampRouters(app) {
   router.get("/create", lampController.getLampCreateForm);
   router.post("/create", lampController.createLamp);
   router.get("/:id/edit", lampController.getLampEditForm);
-  router.put("/:id/edit", lampController.updateLamp);
+  router.put("/:id/edit", lampController.updateLampById);
   router.delete("/", lampController.removeAllLamps);
   router.delete("/:id/", lampController.removeLampById);
   router.get("/", lampController.getAllLamps);

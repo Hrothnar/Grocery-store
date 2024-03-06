@@ -1,16 +1,21 @@
-import { Tag } from "./tag.js";
+import * as tagValidator from "./tag_validator.js";
+import * as tagService from "./tag_service.js";
+import * as responseSender from "../../sender/response_sender.js";
 
 export function getTagCreateForm(request, response) {
     response.send("This URL is under construction");
 }
 
 export function createTag(request, response) {
-    Tag.create({
-        name: request.body.name
-    })
-        .then((chocolateBar) => {
-            console.log(`Created Tag: ${JSON.stringify(chocolateBar, null, 2)}`);
-            response.send(`Created Tag: ${JSON.stringify(chocolateBar, null, 2)}`)
+    tagValidator.validateTag(request.body)
+        .then((tag) => {
+            tagService.createTag(tag)
+                .then((tag) => {
+                    responseSender.sendCreatedResponse(tag, response);
+                })
+                .catch((error) => {
+                    throw error;
+                });
         })
         .catch((error) => {
             throw error;
@@ -21,14 +26,14 @@ export function getTagEditForm(request, response) {
     response.send("This URL is under construction");
 }
 
-export function updateTag(request, response) {
+export function updateTagById(request, response) {
     response.send("This URL is under construction");
 }
 
 export function removeAllTags(request, response) {
-    Tag.destroy({ where: {} })
-        .then(() => {
-            response.send("All entities were deleted");
+    tagService.removeAllTags()
+        .then((rows) => {
+            responseSender.sendDeletedResponse(rows, response);
         })
         .catch((error) => {
             throw error;
@@ -40,9 +45,9 @@ export function removeTagById(request, response) {
 }
 
 export function getAllTags(request, response) {
-    Tag.findAll({})
+    tagService.getAllTags()
         .then((tags) => {
-            response.send(tags);
+            responseSender.sendGotResponse(tags, response);
         })
         .catch((error) => {
             throw error;

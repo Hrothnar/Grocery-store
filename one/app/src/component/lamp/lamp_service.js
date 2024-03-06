@@ -1,12 +1,12 @@
 import { Lamp } from "./lamp.js";
 import { Tag } from "../tag/tag.js";
-import { Taggable } from "../other/taggable/taggable.js";
+import { Taggable } from "../other/join/join_models.js";
 
 export function createLamp(lamp) {
 
 }
 
-export function updateLamp(lamp, id) {
+export function updateLampById(lamp, id) {
 
 }
 
@@ -24,7 +24,6 @@ export function removeAllLamps() {
         .catch((error) => {
             throw error;
         });
-
 }
 
 export function removeLampById(id) {

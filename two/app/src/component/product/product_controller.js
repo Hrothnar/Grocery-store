@@ -1,7 +1,6 @@
 import * as productValidator from "./product_validator.js";
 import * as productService from "./product_service.js";
 import * as responseSender from "../../sender/response_sender.js";
-import { Product } from "./product.js";
 
 export function getProductCreateForm(request, response) {
     response.send("This URL is under construction");

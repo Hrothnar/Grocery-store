@@ -19,7 +19,7 @@ app.use(log); // custom middleware for logging HTTP requests
 
 setupModelRelations();
 registerAppRouters(app);
-fillDatabase();
+// fillDatabase(); // for development
 
 app.use([status500, status404]);
 

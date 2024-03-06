@@ -1,12 +1,12 @@
 import { ToyCar } from "../toy_car/toy_car.js";
 import { Tag } from "../tag/tag.js";
-import { Taggable } from "../other/taggable/taggable.js";
+import { Taggable } from "../other/join/join_models.js";
 
 export function createToyCar(toyCar) {
 
 }
 
-export function updateToyCar(toyCar, id) {
+export function updateToyCarById(toyCar, id) {
 
 }
 

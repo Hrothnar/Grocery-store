@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import * as chocolateBarService from "../chocolate_bar/chocolate_bar_service.js";
 import * as lampService from "../lamp/lamp_service.js";
 import * as toyCarService from "../toy_car/toy_car_service.js";
@@ -82,7 +83,6 @@ export function getProductById(id) {
         .catch((error) => {
             throw error;
         })
-
 }
 
 async function getPreparedProducts(productsFromTwo) {
@@ -122,7 +122,7 @@ async function getMappedProducts() {
         }
         for (const product of productType) {
             map[product.constructor.name][product.dataValues.id] = product.dataValues;
-            
+
         }
     }
     return map;

@@ -2,7 +2,7 @@ import { ToyCar } from "../component/toy_car/toy_car.js"
 import { Lamp } from "../component/lamp/lamp.js";
 import { ChocolateBar } from "../component/chocolate_bar/chocolate_bar.js";
 import { Tag } from "../component/tag/tag.js";
-import { Taggable } from "../component/other/taggable/taggable.js";
+import { Taggable } from "../component/other/join/join_models.js";
 
 export function setupModelRelations() {
 
