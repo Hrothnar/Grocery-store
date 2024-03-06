@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
-import { Taggable } from "../other/taggable/taggable.js";
+import { Taggable } from "../other/join/join_models.js";
 
 export function createChocolateBar(chocolateBar) {
     return ChocolateBar.create(chocolateBar)

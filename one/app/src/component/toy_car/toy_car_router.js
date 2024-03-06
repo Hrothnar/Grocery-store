@@ -7,7 +7,7 @@ export function registerToyCarRouters(app) {
   router.get("/create", toyCarController.getToyCarCreateForm);
   router.post("/create", toyCarController.createToyCar);
   router.get("/:id/edit", toyCarController.getToyCarEditForm);
-  router.put("/:id/edit", toyCarController.updateToyCar);
+  router.put("/:id/edit", toyCarController.updateToyCarById);
   router.delete("/", toyCarController.removeAllToyCars);
   router.delete("/:id/", toyCarController.removeToyCarById);
   router.get("/", toyCarController.getAllToyCars);

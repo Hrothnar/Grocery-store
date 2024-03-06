@@ -6,15 +6,16 @@ import { SaleCustomer, SaleProduct } from "../component/other/join/join_models.j
 
 export function setupModelRelations() {
 
-    Customer.belongsToMany(Sale, {
-        through: SaleCustomer,
-        foreignKey: "customer_id",
-        timestamps: false
-    });
-
     Sale.belongsToMany(Customer, {
         through: SaleCustomer,
         foreignKey: "sale_id",
+        onDelete: "CASCADE",
+        timestamps: false
+    });
+
+    Customer.belongsToMany(Sale, {
+        through: SaleCustomer,
+        foreignKey: "customer_id",
         timestamps: false
     });
 

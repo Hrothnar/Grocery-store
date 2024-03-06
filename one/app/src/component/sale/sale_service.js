@@ -4,8 +4,8 @@ export function getSaleCreateForm() {
 
 }
 
-export function createSale(productId) {
-    return axios.get(`http://127.0.0.1:3333/sale/buy/${productId}`)
+export function createSale(customerId, productId) {
+    return axios.get(`http://127.0.0.1:3333/sale/buy/${customerId}/${productId}`)
         .then((sale) => {
             return sale.data;
         })

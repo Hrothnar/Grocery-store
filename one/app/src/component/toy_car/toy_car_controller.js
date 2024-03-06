@@ -10,7 +10,7 @@ export function getToyCarEditForm(request, response) {
     response.send("This URL is under construction");
 }
 
-export function updateToyCar(request, response) {
+export function updateToyCarById(request, response) {
     response.send("This URL is under construction");
 }
 

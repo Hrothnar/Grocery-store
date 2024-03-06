@@ -7,7 +7,7 @@ export function registerTagRouters(app) {
   router.get("/create", tagController.getTagCreateForm);
   router.post("/create", tagController.createTag);
   router.get("/:id/edit", tagController.getTagEditForm);
-  router.put("/:id/edit", tagController.updateTag);
+  router.put("/:id/edit", tagController.updateTagById);
   router.delete("/", tagController.removeAllTags);
   router.delete("/:id/", tagController.removeTagById);
   router.get("/", tagController.getAllTags);

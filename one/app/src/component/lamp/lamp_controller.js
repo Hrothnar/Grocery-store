@@ -10,7 +10,7 @@ export function getLampEditForm(request, response) {
     response.send("This URL is under construction");
 }
 
-export function updateLamp(request, response) {
+export function updateLampById(request, response) {
     response.send("This URL is under construction");
 }
 

@@ -3,6 +3,7 @@ export function sendCreatedResponse(data, response) {
     response.send(`Created model: ${JSON.stringify(data, null, 2)}`);
 }
 
+// Part of alternative approach of handling request
 // export function sendCreatedResponse(request, response) {
 //     const chocolateBar = {
 //         name: request.body.name,

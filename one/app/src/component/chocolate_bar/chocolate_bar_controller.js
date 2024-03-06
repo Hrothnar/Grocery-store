@@ -22,6 +22,8 @@ export function createChocolateBar(request, response) {
         });
 }
 
+
+// Part of alternative approach of handling request
 // export function createChocolateBar(request, response, next) {
 //     next();
 // }
@@ -33,7 +35,7 @@ export function getChocolateBarEditFormById(request, response) {
 export function updateChocolateBarById(request, response) {
     chocolateBarValidator.validateChocolateBar(request.body)
         .then((chocolateBar) => {
-            chocolateBarService.updateChocolateBar(chocolateBar, request.params.id)
+            chocolateBarService.updateChocolateBarById(chocolateBar, request.params.id)
                 .then((array) => {
                     responseSender.sendUpdatedResponse(array, response);
                 })
