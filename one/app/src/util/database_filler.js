@@ -1,7 +1,8 @@
 import axios from "axios";
 
-export function fillDatabase() {
+export function fillDatabase(request, response) {
     setTimeout((filler), 500);
+    response.send("Databases have been filled up with the data! You may continue an interaction with the application");
 }
 
 const filler = () => {
