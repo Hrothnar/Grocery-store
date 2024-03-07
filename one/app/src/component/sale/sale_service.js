@@ -4,8 +4,11 @@ export function getSaleCreateForm() {
 
 }
 
+const host = process.env.BACKEND_CONTAINER_NAME_TWO;
+const port = process.env.APP_PORT_TWO;
+
 export function createSale(customerId, productId) {
-    return axios.get(`http://127.0.0.1:3333/sale/buy/${customerId}/${productId}`)
+    return axios.get(`http://${host}:${port}/sale/buy/${customerId}/${productId}`)
         .then((sale) => {
             return sale.data;
         })
@@ -23,7 +26,7 @@ export function updateSaleById(sale, id) {
 }
 
 export function removeAllSales() {
-    return axios.delete("http://127.0.0.1:3333/sale")
+    return axios.delete(`http://${host}:${port}/sale`)
         .then((rows) => {
             return rows.data;
         })
@@ -38,7 +41,7 @@ export function removeSaleById(id) {
 }
 
 export function getAllSales() {
-    return axios.get("http://127.0.0.1:3333/sale")
+    return axios.get(`http://${host}:${port}/sale`)
         .then((sales) => {
             return sales.data;
         })
@@ -49,7 +52,7 @@ export function getAllSales() {
 }
 
 export function getSaleById(id) {
-    return axios.get(`http://127.0.0.1:3333/sale/${id}`)
+    return axios.get(`http://${host}:${port}/sale/${id}`)
         .then((sale) => {
             return sale.data;
         })

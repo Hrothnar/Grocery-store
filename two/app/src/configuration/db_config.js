@@ -9,9 +9,11 @@ const dbName = process.env.POSTGRES_DB_TWO;
 const dbUser = process.env.POSTGRES_USER_TWO;
 const dbPassword = process.env.POSTGRES_PASSWORD_TWO;
 const dbDialect = process.env.DB_DIALECT_TWO;
+const dbPort = process.env.DB_PORT_TWO;
 
 const connectionParameters = {
-  HOST: dbHost,
+  host: dbHost,
+  port: dbPort,
   dialect: dbDialect,
   pool: {
     max: 5,

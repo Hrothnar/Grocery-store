@@ -4,10 +4,13 @@ import { ChocolateBar } from "./chocolate_bar.js";
 import { Tag } from "../tag/tag.js";
 import { Taggable } from "../other/join/join_models.js";
 
+const host = process.env.BACKEND_CONTAINER_NAME_TWO;
+const port = process.env.APP_PORT_TWO;
+
 export function createChocolateBar(chocolateBar) {
     return ChocolateBar.create(chocolateBar)
         .then((model) => {
-            return axios.post("http://127.0.0.1:3333/product/create", {
+            return axios.post(`http://${host}:${port}/product/create`, {
                 ...chocolateBar,
                 productId: model.dataValues.id,
                 productType: "ChocolateBar"

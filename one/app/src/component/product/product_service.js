@@ -4,6 +4,8 @@ import * as chocolateBarService from "../chocolate_bar/chocolate_bar_service.js"
 import * as lampService from "../lamp/lamp_service.js";
 import * as toyCarService from "../toy_car/toy_car_service.js";
 
+const host = process.env.BACKEND_CONTAINER_NAME_TWO;
+const port = process.env.APP_PORT_TWO;
 
 export function getProductCreateForm() {
 
@@ -22,7 +24,7 @@ export function updateProductById(product, id) {
 }
 
 export function removeAllProducts() {
-    return axios.delete("http://127.0.0.1:3333/product")
+    return axios.delete(`http://${host}:${port}/product`)
         .then((productRows) => {
             return chocolateBarService.removeAllChocolateBars()
                 .then((chocolateBarRows) => {
@@ -54,7 +56,7 @@ export function removeProductById(id) {
 }
 
 export function getAllProducts() {
-    return axios.get("http://127.0.0.1:3333/product")
+    return axios.get(`http://${host}:${port}/product`)
         .then((products) => {
             return getPreparedProducts(products.data)
                 .then((preparedProducts) => {
@@ -70,7 +72,7 @@ export function getAllProducts() {
 }
 
 export function getProductById(id) {
-    return axios.get(`http://127.0.0.1:3333/product/${id}`)
+    return axios.get(`http://${host}:${port}/product/${id}`)
         .then((product) => {
             return getPreparedProduct(product.data)
                 .then((preparedProduct) => {

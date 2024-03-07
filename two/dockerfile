@@ -1,12 +1,8 @@
 FROM node:21-bookworm
 LABEL maintainer="kirill@caiman.am"
-ENV POSTGRES_DB_TWO=$POSTGRES_DB_TWO \
-    POSTGRES_USER_TWO=$POSTGRES_USER_TWO \
-    POSTGRES_PASSWORD_TWO=$POSTGRES_PASSWORD_TWO \
-    PORT=$APP_PORT_TWO
 WORKDIR /server
 COPY ./ ./
-EXPOSE $PORT
+EXPOSE 3333
 # RUN apt update && apk upgrade
 RUN npm install
 CMD ["node", "index.js"]

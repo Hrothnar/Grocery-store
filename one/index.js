@@ -10,7 +10,7 @@ import { fillDatabase } from "./app/src/util/database_filler.js";
 
 const app = express();
 
-const port = process.env.APP_PORT_ONE;
+const port = process.env.APP_PORT_ONE || "1111";
 
 app.use(configureCors());
 app.use(express.json()); // parse requests of content-type - application/json
