@@ -3,6 +3,5 @@ LABEL maintainer="kirill@caiman.am"
 WORKDIR /server
 COPY ./ ./
 EXPOSE 1111
-# RUN apt update && apk upgrade
 RUN npm install
 CMD ["node", "index.js"]
