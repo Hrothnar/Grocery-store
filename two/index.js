@@ -22,15 +22,15 @@ registerAppRouters(app);
 app.use([status500, status404]);
 
 app.listen(port, () => {
-  console.log("\n=================================================================");
-  console.log(`The express.js server has started and is listening on port: ${port}`);
+    console.log("\n=================================================================");
+    console.log(`The express.js server has started and is listening on port: ${port}`);
 });
 
 sequelize.sync({ force: true })
-  .then(() => {
-    console.log("\nSequelize schemas were created");
-    console.log("============================================================================");
-  })
-  .catch((error) => {
-    console.log(`Failed to sync db: ${error.message}`);
-  });
+    .then(() => {
+        console.log("\nSequelize schemas were created");
+        console.log("============================================================================");
+    })
+    .catch((error) => {
+        console.log(`Failed to sync db: ${error.message}`);
+    });

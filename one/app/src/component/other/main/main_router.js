@@ -4,10 +4,10 @@ import * as mainController from "./main_controller.js";
 import { fillDatabase } from "../../../util/database_filler.js";
 
 export function registerMainRouters(app) {
-  const router = express.Router();
+    const router = express.Router();
 
-  router.get("/", mainController.hello);
-  router.get("/fill", fillDatabase) // populate databases with data
+    router.get("/", mainController.hello);
+    router.get("/fill", fillDatabase) // populate databases with data
 
-  app.use("/", router);
+    app.use("/", router);
 }
