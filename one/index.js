@@ -2,11 +2,11 @@ import express from "express";
 
 import { configureCors } from "./app/src/configuration/cors_config.js";
 import { setupModelRelations } from "./app/src/configuration/db_relations_config.js";
-import { registerAppRouters } from "./app/src/util/router_register.js";
+import { registerAppRouters } from "./app/src/process/registrar/router_registrar.js";
 import { sequelize } from "./app/src/configuration/db_config.js";
 import { status404, status500 } from "./app/src/error/error_handler.js";
-import { log } from "./app/src/util/logger/http_logger.js";
-import { fillDatabase } from "./app/src/util/database_filler.js";
+import { log } from "./app/src/utility/logger/http_logger.js";
+import { fillDatabase } from "./app/src/utility/database_filler.js";
 
 const app = express();
 
